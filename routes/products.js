@@ -109,26 +109,26 @@ router.put('/:id', authenticateToken, async (req, res) => {
     const slug = name ? slugify(name) + '-' + req.params.id : existing.slug;
 
     await Product.findByIdAndUpdate(req.params.id, {
-      category_id: category_id ?? existing.category_id,
-      name: name ?? existing.name,
+      category_id: category_id !== undefined ? category_id : existing.category_id,
+      name: name !== undefined ? name : existing.name,
       slug,
-      description: description ?? existing.description,
-      short_description: short_description ?? existing.short_description,
-      price: price ?? existing.price,
-      price_usd: price_usd ?? existing.price_usd,
-      original_price: original_price ?? existing.original_price,
-      type: type ?? existing.type,
+      description: description !== undefined ? description : existing.description,
+      short_description: short_description !== undefined ? short_description : existing.short_description,
+      price: price !== undefined ? price : existing.price,
+      price_usd: price_usd !== undefined ? price_usd : existing.price_usd,
+      original_price: original_price !== undefined ? original_price : existing.original_price,
+      type: type !== undefined ? type : existing.type,
       badge: badge !== undefined ? badge : existing.badge,
-      features: features || existing.features,
+      features: features !== undefined ? features : existing.features,
       system_requirements: system_requirements !== undefined ? system_requirements : existing.system_requirements,
-      download_url: download_url ?? existing.download_url,
-      video_url: video_url ?? existing.video_url,
-      version: version ?? existing.version,
-      file_size: file_size ?? existing.file_size,
-      image_url: image_url ?? existing.image_url,
+      download_url: download_url !== undefined ? download_url : existing.download_url,
+      video_url: video_url !== undefined ? video_url : existing.video_url,
+      version: version !== undefined ? version : existing.version,
+      file_size: file_size !== undefined ? file_size : existing.file_size,
+      image_url: image_url !== undefined ? image_url : existing.image_url,
       is_featured: is_featured !== undefined ? !!is_featured : existing.is_featured,
       is_active: is_active !== undefined ? !!is_active : existing.is_active,
-      sort_order: sort_order ?? existing.sort_order,
+      sort_order: sort_order !== undefined ? sort_order : existing.sort_order,
       updated_at: new Date(),
     });
 
@@ -140,7 +140,9 @@ router.put('/:id', authenticateToken, async (req, res) => {
 
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
+    const result = await Product.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ error: 'Product not found.' });
+    await DownloadLink.deleteMany({ product_id: req.params.id });
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Server error.' });
