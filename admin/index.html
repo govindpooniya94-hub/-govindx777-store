@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - GOVIND X777</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#050508;--bg2:#0a0a12;--bg3:#0f0f1a;--bg4:#1a1a2e;--accent:#ff6b35;--accent2:#e63900;--accent-dim:rgba(255,107,53,.12);--text:#e8e8f0;--text2:#8888aa;--text3:#555577;--border:rgba(255,255,255,.06);--radius:8px;--radius-sm:5px;--font:'Inter','Segoe UI',system-ui,sans-serif}body{font-family:var(--font);background:var(--bg);color:var(--text);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--text3);border-radius:4px}::selection{background:var(--accent);color:#fff}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.sidebar{width:240px;background:var(--bg3);border-right:1px solid var(--border);padding:0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}.sidebar-brand{padding:22px 20px 18px;border-bottom:1px solid var(--border)}.sidebar nav{padding:8px;flex:1;overflow-y:auto}.sidebar nav a{padding:9px 14px;border-radius:var(--radius);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s ease;text-decoration:none;display:flex;align-items:center;gap:10px;margin-bottom:2px;position:relative;overflow:hidden}.sidebar nav a:hover{background:var(--bg4);color:var(--text);transform:translateX(3px)}.sidebar nav a.active{color:var(--accent);background:var(--accent-dim);box-shadow:inset 3px 0 0 var(--accent)}.sidebar .user-section{padding:16px 20px;border-top:1px solid var(--border);font-size:12px;color:var(--text2)}
+.main{margin-left:240px;flex:1;padding:32px 40px;min-height:100vh;animation:fadeIn .3s ease}.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border)}.top-bar h1{font-size:22px;font-weight:700;letter-spacing:-.4px;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.btn{position:relative;padding:9px 20px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s cubic-bezier(.16,1,.3,1);border:none;font-family:var(--font);display:inline-flex;align-items:center;gap:7px;letter-spacing:.2px;overflow:hidden;user-select:none}.btn:active{transform:scale(.96)}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 14px rgba(255,107,53,.25)}.btn-primary:hover{box-shadow:0 6px 20px rgba(255,107,53,.4);transform:translateY(-1px)}.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}.btn-outline{background:0 0;color:var(--text);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);transform:translateY(-1px)}.btn-danger{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;box-shadow:0 4px 14px rgba(220,38,38,.25)}.btn-danger:hover{box-shadow:0 6px 20px rgba(220,38,38,.4);transform:translateY(-1px)}.btn-success{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;box-shadow:0 4px 14px rgba(22,163,74,.25)}.btn-success:hover{box-shadow:0 6px 20px rgba(22,163,74,.4);transform:translateY(-1px)}.btn-sm{padding:5px 12px;font-size:11px;border-radius:var(--radius-sm)}.btn-sm:active{transform:scale(.94)}
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px;transition:all .25s ease}.card:hover{border-color:rgba(255,255,255,.1)}.card-title{font-size:11px;font-weight:700;margin-bottom:16px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:28px}.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .25s ease;position:relative;overflow:hidden}.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}.stat-card:hover{border-color:rgba(255,107,53,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}.stat-card .num{font-size:28px;font-weight:800;margin-bottom:3px;background:linear-gradient(135deg,var(--accent),#ff9933);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.stat-card .label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.6px;background:var(--bg2)}td{color:var(--text2);transition:background .15s}tr:hover td{background:var(--bg4)}tr:last-child td{border-bottom:none}.badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.3px}.badge.free{background:rgba(22,163,74,.12);color:#22c55e}.badge.paid{background:rgba(255,107,53,.12);color:var(--accent)}.badge.active{background:rgba(22,163,74,.12);color:#22c55e}.badge.inactive{background:rgba(220,38,38,.12);color:#ef4444}.badge.new{background:rgba(234,179,8,.12);color:#eab308}
+.actions{display:flex;gap:6px}.actions .btn{padding:5px 11px;font-size:11px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}.modal.open{display:flex}.modal-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:28px;width:90%;max-width:640px;max-height:85vh;overflow-y:auto;animation:scaleIn .25s cubic-bezier(.16,1,.3,1);box-shadow:0 24px 64px rgba(0,0,0,.5)}.modal-box h2{font-size:17px;font-weight:700;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}.form-group{margin-bottom:16px}.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:all .2s ease}.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}.form-group textarea{min-height:80px;resize:vertical}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
+.login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999}.login-box{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:40px;width:400px;max-width:90%;box-shadow:0 24px 80px rgba(0,0,0,.6);animation:scaleIn .35s cubic-bezier(.16,1,.3,1)}.login-box h2{text-align:center;margin-bottom:4px;font-size:20px;font-weight:800}.login-box .sub{text-align:center;color:var(--text3);font-size:13px;margin-bottom:28px}.login-box .error{color:#ef4444;font-size:13px;margin-bottom:14px;display:none;text-align:center;background:rgba(220,38,38,.1);padding:10px 14px;border-radius:var(--radius-sm)}.login-box .error.visible{display:block}
+.tab-content{display:none;animation:fadeIn .3s ease}.tab-content.active{display:block}.empty{padding:48px;text-align:center;color:var(--text3);font-size:14px}
+.link-group{border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;background:var(--bg2);transition:border-color .2s}.link-group:hover{border-color:rgba(255,255,255,.1)}.link-group .lg-title{font-size:13px;font-weight:600;margin-bottom:8px;color:var(--text2)}.link-group .lg-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}.link-group .lg-row input{flex:1;padding:7px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:12px;outline:none;transition:border-color .2s}.link-group .lg-row input:focus{border-color:var(--accent)}
+.toast{position:fixed;bottom:20px;right:20px;padding:14px 22px;border-radius:10px;background:var(--bg4);border:1px solid var(--border);color:var(--text);font-size:13px;z-index:99999;box-shadow:0 8px 32px rgba(0,0,0,.5);border-left:3px solid var(--accent);display:flex;align-items:center;gap:10px;transition:all .35s cubic-bezier(.16,1,.3,1)}.toast.success{border-left-color:#22c55e}.toast.error{border-left-color:#ef4444}.toast .toast-icon{font-size:16px}
+.ripple{position:relative;overflow:hidden}.ripple span{position:absolute;border-radius:50%;background:rgba(255,255,255,.25);transform:scale(0);animation:rippleAnim .6s ease-out;pointer-events:none}@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+.spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;display:inline-block}@keyframes spin{to{transform:rotate(360deg)}}
+.loading-row td{text-align:center;padding:32px}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0;padding:20px}.form-row{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div id="login-screen" class="login-screen">
+  <div class="login-box">
+    <h2 style="background:linear-gradient(135deg,#ff6b35,#ff3e00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:900">GOVIND X777</h2>
+    <p class="sub">Admin Panel</p>
+    <div class="error" id="login-error">Invalid credentials</div>
+    <div class="form-group"><label>Username</label><input type="text" id="login-user" placeholder="Enter username" autocomplete="username" /></div>
+    <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="Enter password" autocomplete="current-password" /></div>
+    <button type="button" class="btn btn-primary" style="width:100%;justify-content:center" id="login-btn" data-action="login">Sign In</button>
+  </div>
+</div>
+
+<aside class="sidebar">
+  <div class="sidebar-brand" style="background:linear-gradient(135deg,#ff6b35,#ff3e00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:18px;font-weight:900;letter-spacing:-.5px">GOVIND X777</div>
+  <nav>
+    <a class="active" data-tab="dashboard"> Dashboard</a>
+    <a data-tab="products"> Products</a>
+    <a data-tab="downloads"> Download Links</a>
+    <a data-tab="testimonials"> Testimonials</a>
+    <a data-tab="faqs"> FAQs</a>
+    <a data-tab="videos"> Tutorial Videos</a>
+    <a data-tab="videonotif"> Video Popup</a>
+    <a data-tab="orders"> Orders</a>
+    <a data-tab="messages"> Messages</a>
+    <a data-tab="blog"> Blog</a>
+    <a data-tab="settings"> Settings</a>
+  </nav>
+  <div class="user-section">
+    <div id="admin-user" style="margin-bottom:6px"> Admin</div>
+    <button class="btn btn-sm btn-outline" data-action="logout" style="width:100%">Logout</button>
+  </div>
+</aside>
+
+<main class="main" id="main-content">
+  <div class="top-bar">
+    <h1 id="page-title"> Dashboard</h1>
+  </div>
+
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="stats" id="dash-stats"></div>
+    <div class="card">
+      <div class="card-title">Quick Actions</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary" data-action="switchTab" data-tab="products" data-delay="showProductModal"> Add Product</button>
+        <button class="btn btn-primary" data-action="switchTab" data-tab="downloads"> Manage Links</button>
+        <button class="btn btn-primary" data-action="switchTab" data-tab="videos"> Add Video</button>
+        <button class="btn btn-primary" data-action="switchTab" data-tab="testimonials" data-delay="showTestimonialModal"> Add Testimonial</button>
+        <button class="btn btn-primary" data-action="switchTab" data-tab="faqs" data-delay="showFaqModal"> Add FAQ</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Recent Messages</div>
+      <div id="dash-messages"></div>
+    </div>
+  </div>
+
+  <div id="tab-products" class="tab-content">
+    <div style="margin-bottom:12px"><button class="btn btn-primary" data-action="showProductModal"> New Product</button></div>
+    <div class="card" style="overflow-x:auto"><table><thead><tr><th>Name</th><th>Type</th><th>Price</th><th>Category</th><th>Downloads</th><th>Status</th><th style="width:100px">Actions</th></tr></thead><tbody id="products-table"></tbody></table></div>
+  </div>
+
+  <div id="tab-downloads" class="tab-content">
+    <div class="card">
+      <div class="card-title">Product Download Links</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:12px">Manage download links for each product. You can add multiple links per product.</p>
+      <div id="downloads-manager"></div>
+    </div>
+  </div>
+
+  <div id="tab-videos" class="tab-content">
+    <div style="margin-bottom:12px"><button class="btn btn-primary" data-action="showVideoModal"> Add Video</button></div>
+    <div class="card" style="overflow-x:auto"><table><thead><tr><th>Title</th><th>Product</th><th>URL</th><th>Status</th><th style="width:80px">Actions</th></tr></thead><tbody id="videos-table"></tbody></table></div>
+  </div>
+
+  <div id="tab-testimonials" class="tab-content">
+    <div style="margin-bottom:12px"><button class="btn btn-primary" data-action="showTestimonialModal"> New Testimonial</button></div>
+    <div class="card" style="overflow-x:auto"><table><thead><tr><th>Name</th><th>Rating</th><th>Content</th><th>Status</th><th style="width:80px">Actions</th></tr></thead><tbody id="testimonials-table"></tbody></table></div>
+  </div>
+
+  <div id="tab-faqs" class="tab-content">
+    <div style="margin-bottom:12px"><button class="btn btn-primary" data-action="showFaqModal"> New FAQ</button></div>
+    <div class="card" style="overflow-x:auto"><table><thead><tr><th>Question</th><th>Category</th><th>Status</th><th style="width:80px">Actions</th></tr></thead><tbody id="faqs-table"></tbody></table></div>
+  </div>
+
+  <div id="tab-videonotif" class="tab-content">
+    <div style="margin-bottom:12px"><button class="btn btn-primary" data-action="showVnModal"> New Notification</button></div>
+    <div class="card">
+      <div class="card-title">YouTube Video Popup Notification</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:12px">This shows a popup on the site's top-right when someone visits. Add your latest YouTube video here.</p>
+      <div style="overflow-x:auto"><table><thead><tr><th>Title</th><th>Thumbnail</th><th>Status</th><th style="width:80px">Actions</th></tr></thead><tbody id="vn-table"></tbody></table></div>
+    </div>
+  </div>
+
+  <div id="tab-orders" class="tab-content">
+    <div class="card" style="overflow-x:auto">
+      <div class="card-title">Purchase Requests</div>
+      <div id="orders-summary" style="display:flex;gap:14px;margin-bottom:16px"></div>
+      <div style="margin-bottom:12px;display:flex;gap:6px">
+        <button class="btn btn-sm btn-outline" data-action="loadOrders"> All</button>
+        <button class="btn btn-sm btn-outline" data-action="loadOrders" data-status="pending">⏳ Pending</button>
+        <button class="btn btn-sm btn-success" style="font-size:11px;padding:5px 12px" data-action="loadOrders" data-status="approved">✓ Approved</button>
+      </div>
+      <table><thead><tr><th>Order</th><th>Product</th><th>Customer / Txn</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="orders-table"></tbody></table>
+    </div>
+  </div>
+
+  <div id="tab-messages" class="tab-content">
+    <div class="card" style="overflow-x:auto"><table><thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th><th>Status</th><th style="width:60px">Action</th></tr></thead><tbody id="messages-table"></tbody></table></div>
+  </div>
+
+  <div id="tab-blog" class="tab-content">
+    <div style="margin-bottom:12px"><button class="btn btn-primary" data-action="showBlogModal"> New Post</button></div>
+    <div class="card" style="overflow-x:auto"><table><thead><tr><th>Title</th><th>Author</th><th>Date</th><th>Status</th><th style="width:80px">Actions</th></tr></thead><tbody id="blog-table"></tbody></table></div>
+  </div>
+
+  <div id="tab-settings" class="tab-content">
+    <div class="card">
+      <div class="card-title">Site Configuration</div>
+      <div class="form-group"><label>Site Title</label><input type="text" id="set-title" value="GOVIND X777" /></div>
+      <div class="form-group"><label>Site Description</label><textarea id="set-desc">Premium gaming tools and panels at govindx777store.</textarea></div>
+      <div class="form-group"><label>Archive Password</label><input type="text" id="set-pass" value="GovindX777@2024" /></div>
+       <div class="form-group"><label>Contact Email</label><input type="text" id="set-email" value="support@govindx777store.in" /></div>
+       <div class="form-group"><label>UPI ID (for payments)</label><input type="text" id="set-upi-id" placeholder="govindx777@upi" /></div>
+       <div class="form-group"><label>UPI Name (shown on checkout)</label><input type="text" id="set-upi-name" placeholder="GOVIND X777" /></div>
+       <div class="form-group"><label>Binance ID (for global payments)</label><input type="text" id="set-binance-id" placeholder="1204964627" /></div>
+      <button class="btn btn-primary" data-action="saveSettings">Save Settings</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Fake Stats (Live Counter)</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:12px">Enable fake stats to show custom numbers instead of real data.</p>
+      <div class="form-group">
+        <label><input type="checkbox" id="set-fake-enable" style="width:auto;margin-right:6px" /> Use Fake Stats</label>
+      </div>
+      <div id="fake-stats-fields" style="display:none">
+        <div class="form-row">
+          <div class="form-group"><label>Live Users (max 99)</label><input type="number" id="set-fake-users" min="1" max="99" value="56" /></div>
+          <div class="form-group"><label>Today Visits</label><input type="number" id="set-fake-visits" value="456" /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Total Downloads</label><input type="number" id="set-fake-downloads" value="1234" /></div>
+          <div class="form-group"><label>Active Products</label><input type="number" id="set-fake-products" value="12" /></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" data-action="saveFakeStats">Save Fake Stats</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Database</div>
+      <button class="btn btn-outline" data-action="reseed"> Re-seed Database</button>
+      <span style="font-size:11px;color:var(--text3);margin-left:8px">Resets all products, FAQs, and testimonials to defaults</span>
+    </div>
+  </div>
+</main>
+
+<div class="modal" id="modal-overlay">
+  <div class="modal-box" id="modal-content"></div>
+</div>
+
+<script>
+var ADMIN = {
+  token: null, BASE: '/api',
+
+  async req(method, path, data, timeoutMs) {
+    const h = { 'Content-Type': 'application/json' };
+    if (this.token) h['Authorization'] = 'Bearer ' + this.token;
+    const ctrl = new AbortController();
+    const tmr = setTimeout(() => ctrl.abort(), timeoutMs || 20000);
+    try {
+      const r = await fetch(this.BASE + path, { method, headers: h, body: data ? JSON.stringify(data) : undefined, signal: ctrl.signal });
+      clearTimeout(tmr);
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || 'Request failed (' + r.status + ')');
+      return j;
+    } catch(e) {
+      clearTimeout(tmr);
+      throw e;
+    }
+  },
+
+  toast(msg, type) {
+    const t = document.createElement('div'); t.className = 'toast ' + (type||'');
+    const icons = { success: '✓', error: '✕' };
+    t.innerHTML = '<span class="toast-icon">' + (icons[type]||'') + '</span><span>' + msg + '</span>';
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(40px)'; setTimeout(() => t.remove(), 300); }, 3500);
+  },
+
+  spinnerHtml() { return '<div class="spinner"></div>'; },
+
+  showLoading(el) {
+    if (typeof el === 'string') el = document.getElementById(el);
+    if (el) el.innerHTML = '<tr class="loading-row"><td colspan="10"><div class="spinner" style="margin:0 auto"></div></td></tr>';
+  },
+
+  async login() {
+    const username = document.getElementById('login-user').value.trim();
+    const password = document.getElementById('login-pass').value;
+    const errEl = document.getElementById('login-error');
+    const btn = document.getElementById('login-btn');
+
+    errEl.classList.remove('visible');
+    errEl.style.display = 'none';
+
+    if (!username || !password) {
+      errEl.textContent = 'Please fill in both username and password.';
+      errEl.style.display = 'block';
+      errEl.classList.add('visible');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Signing In...';
+
+    try {
+      const r = await this.req('POST', '/auth/login', { username, password }, 15000);
+      if (!r || !r.token) {
+        errEl.textContent = 'Login failed. No token received.';
+        errEl.style.display = 'block';
+        errEl.classList.add('visible');
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+        return;
+      }
+      this.token = r.token;
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-user').textContent = ' ' + r.username;
+      this.loadAll();
+    } catch(e) {
+      if (e.name === 'AbortError') {
+        errEl.textContent = 'Request timeout. Server did not respond.';
+      } else {
+        errEl.textContent = e.message || 'Login failed. Server error.';
+      }
+      errEl.style.display = 'block';
+      errEl.classList.add('visible');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+    }
+  },
+
+  logout() { this.token = null; document.getElementById('login-screen').style.display = 'flex'; },
+  closeModal() { document.getElementById('modal-overlay').classList.remove('open'); },
+
+  switchTab(name, delayAction) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sidebar nav a').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    var tabLink = document.querySelector('.sidebar nav a[data-tab="'+name+'"]');
+    if (tabLink) tabLink.classList.add('active');
+    const titles = {dashboard:' Dashboard',products:' Products',downloads:' Download Links',testimonials:' Testimonials',faqs:' FAQs',videos:' Tutorial Videos',videonotif:' Video Popup',messages:' Messages',blog:' Blog',settings:' Settings'};
+    document.getElementById('page-title').textContent = titles[name] || name;
+    if (name==='dashboard') this.loadDashboard();
+    if (name==='products') this.loadProducts();
+    if (name==='downloads') this.loadDownloads();
+    if (name==='testimonials') this.loadTestimonials();
+    if (name==='faqs') this.loadFaqs();
+    if (name==='videos') this.loadVideos();
+    if (name==='videonotif') this.loadVn();
+    if (name==='orders') this.loadOrders();
+    if (name==='messages') this.loadMessages();
+    if (name==='blog') this.loadBlog();
+    if (name==='settings') this.loadSettings();
+    var self = this;
+    if (delayAction) { setTimeout(function(){ self[delayAction](); }, 100); }
+  },
+
+  async loadAll() { this.loadDashboard(); this.loadProducts(); this.loadTestimonials(); this.loadFaqs(); this.loadOrders(); this.loadMessages(); this.loadBlog(); this.loadVideos(); this.loadVn(); },
+
+  async loadDashboard() {
+    try {
+      const s = await this.req('GET', '/site/stats');
+      const msgs = await this.req('GET', '/contact?read=false');
+      document.getElementById('dash-stats').innerHTML = [
+        {n:s.totalDownloads,l:'Total Downloads'},{n:s.totalProducts,l:'Active Products'},{n:s.totalFree,l:'Free Tools'},{n:s.totalPaid,l:'Paid Products'},{n:s.onlineUsers,l:'Online Now'},{n:s.totalVisits,l:'Total Visits'}
+      ].map(i => '<div class="stat-card"><div class="num">'+i.n.toLocaleString()+'</div><div class="label">'+i.l+'</div></div>').join('');
+      const dm = document.getElementById('dash-messages');
+      if (!msgs.length) dm.innerHTML = '<div class="empty">No new messages</div>';
+      else dm.innerHTML = msgs.slice(0,5).map(function(m){return '<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><strong>'+m.name+'</strong> <span style="color:var(--text3)">('+m.email+')</span>: '+m.message.slice(0,80)+'...</div>'}).join('');
+    } catch(e) { this.toast('Dashboard error: '+e.message,'error'); }
+  },
+
+  async loadProducts() {
+    this.showLoading('products-table');
+    try {
+      const p = await this.req('GET', '/products');
+      const tbody = document.getElementById('products-table');
+      if (!p.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty">No products. Add one!</td></tr>'; return; }
+      tbody.innerHTML = p.map(function(x){return '<tr>'
+        +'<td><strong>'+x.name+'</strong></td>'
+        +'<td><span class="badge '+x.type+'">'+x.type+'</span></td>'
+        +'<td>'+x.price+'</td>'
+        +'<td>'+(x.category_name||'-')+'</td>'
+        +'<td>'+(x.download_count||0)+'</td>'
+        +'<td><span class="badge '+(x.is_active?'active':'inactive')+'">'+(x.is_active?'Active':'Inactive')+'</span></td>'
+        +'<td class="actions">'
+        +'<button class="btn btn-sm btn-outline" data-action="showProductModal" data-id="'+x.id+'">Edit</button>'
+        +'<button class="btn btn-sm btn-danger" data-action="deleteProduct" data-id="'+x.id+'">Delete</button>'
+        +'</td>'
+        +'</tr>'}).join('');
+    } catch(e) { this.toast('Failed to load products','error'); }
+  },
+
+  async showProductModal(id) {
+    let p = {name:'',description:'',short_description:'',price:'Free',type:'free',badge:'FREE',version:'',file_size:'',features:[],category_id:''};
+    if (id) { try { const all = await this.req('GET', '/products'); p = all.find(function(x){return x.id===id}) || p; } catch(e) {} }
+    try { var cats = await this.req('GET', '/site/categories'); } catch(e) { var cats = []; }
+    const fs = Array.isArray(p.features) ? p.features.map(function(f){return f.replace(/^[✅❌]\s*/, '')}).join('\n') : '';
+    document.getElementById('modal-content').innerHTML = '<h2>'+(id?'Edit':'Add')+' Product</h2>'
+      +'<div class="form-row">'
+      +'<div class="form-group"><label>Name</label><input type="text" id="pf-name" value="'+p.name.replace(/"/g,'&quot;')+'" /></div>'
+      +'<div class="form-group"><label>Category</label><select id="pf-cat">'+cats.map(function(c){return '<option value="'+c.id+'" '+(c.id===p.category_id?'selected':'')+'>'+c.name+'</option>'}).join('')+'</select></div>'
+      +'</div>'
+      +'<div class="form-group"><label>Short Description</label><input type="text" id="pf-short" value="'+((p.short_description||'').replace(/"/g,'&quot;'))+'" /></div>'
+      +'<div class="form-group"><label>Full Description</label><textarea id="pf-desc">'+(p.description||'')+'</textarea></div>'
+      +'<div class="form-row">'
+      +'<div class="form-group"><label>Price (INR)</label><input type="text" id="pf-price" value="'+p.price+'" /></div>'
+               +'<div class="form-group"><label>Price (USD) <span style="color:var(--text3);font-weight:400">— auto-calculated if empty</span></label><input type="text" id="pf-price-usd" value="'+(p.price_usd||'')+'" placeholder="Leave empty for auto ₹→$ conversion" /></div>'
+      +'</div>'
+      +'<div class="form-group"><label>Original Price</label><input type="text" id="pf-oprice" value="'+(p.original_price||'')+'" /></div>'
+      +'<div class="form-row">'
+      +'<div class="form-group"><label>Type</label><select id="pf-type"><option value="free" '+(p.type==='free'?'selected':'')+'>Free</option><option value="paid" '+(p.type==='paid'?'selected':'')+'>Paid</option></select></div>'
+      +'<div class="form-group"><label>Badge</label><input type="text" id="pf-badge" value="'+(p.badge||'')+'" /></div>'
+      +'</div>'
+      +'<div class="form-row">'
+      +'<div class="form-group"><label>Version</label><input type="text" id="pf-ver" value="'+(p.version||'')+'" /></div>'
+      +'<div class="form-group"><label>File Size</label><input type="text" id="pf-size" value="'+(p.file_size||'')+'" /></div>'
+      +'</div>'
+               +'<div class="form-group"><label>Features (one per line)</label><textarea id="pf-features">'+fs+'</textarea></div>'
+               +'<div class="form-group"><label>Product Keys (one per line — shown after purchase)</label><textarea id="pf-keys" placeholder="XXXX-XXXX-XXXX-XXXX">'+(Array.isArray(p.product_keys)?p.product_keys.join('\n'):'')+'</textarea></div>'
+               +'<div class="form-group"><label>Delivery Notes (shown after purchase — HTML/text supported)</label><textarea id="pf-notes" placeholder="Instructions, license info, etc.">'+(p.delivery_notes||'')+'</textarea></div>'
+               +'<div class="modal-actions">'
+      +'<button class="btn btn-outline" data-action="closeModal">Cancel</button>'
+      +'<button class="btn btn-primary" data-action="saveProduct" data-id="'+(id||'')+'">'+(id?'Update':'Create')+'</button>'
+      +'</div>';
+    document.getElementById('modal-overlay').classList.add('open');
+  },
+
+  async saveProduct(id) {
+    const d = {
+      name: document.getElementById('pf-name').value, category_id: document.getElementById('pf-cat').value,
+      short_description: document.getElementById('pf-short').value, description: document.getElementById('pf-desc').value,
+      price: document.getElementById('pf-price').value, price_usd: document.getElementById('pf-price-usd').value || null, original_price: document.getElementById('pf-oprice').value || null,
+      type: document.getElementById('pf-type').value, badge: document.getElementById('pf-badge').value,
+      version: document.getElementById('pf-ver').value||null, file_size: document.getElementById('pf-size').value||null,
+      features: document.getElementById('pf-features').value.split('\n').filter(function(f){return f.trim()}).map(function(f){return f.trim()}),
+      product_keys: document.getElementById('pf-keys').value.split('\n').filter(function(k){return k.trim()}).map(function(k){return k.trim()}),
+      delivery_notes: document.getElementById('pf-notes').value || '',
+    };
+    try {
+      if (id) { await this.req('PUT', '/products/'+id, d); this.toast('Product updated!','success'); }
+      else { await this.req('POST', '/products', d); this.toast('Product created!','success'); }
+      this.closeModal(); this.loadProducts();
+    } catch(e) { this.toast('Error: '+e.message,'error'); }
+  },
+
+  async deleteProduct(id) { if (!confirm('Delete this product?')) return; try { await this.req('DELETE', '/products/'+id); this.toast('Deleted','success'); this.loadProducts(); } catch(e) { this.toast('Error','error'); } },
+
+  async loadDownloads() {
+    try {
+      const products = await this.req('GET', '/products');
+      const container = document.getElementById('downloads-manager');
+      if (!products.length) { container.innerHTML = '<div class="empty">No products yet. Add products first.</div>'; return; }
+      var html = '';
+      for (const p of products) {
+        let links = [];
+        try { links = await this.req('GET', '/downloads/product/'+p.id); } catch(e) {}
+        html += '<div class="link-group">'
+          +'<div class="lg-title">'+p.name+' <span style="font-weight:400;color:var(--text3)">('+p.price+')</span></div>'
+          +'<div id="links-'+p.id+'">'
+          +(links.length ? links.map(function(l){return '<div class="lg-row">'
+            +'<input type="text" value="'+l.label+'" placeholder="Label" data-link-id="'+l.id+'" data-field="label" />'
+            +'<input type="text" value="'+l.url+'" placeholder="URL" data-link-id="'+l.id+'" data-field="url" style="flex:2" />'
+            +'<input type="text" value="'+(l.password||'')+'" placeholder="Password" data-link-id="'+l.id+'" data-field="password" style="width:100px" />'
+            +'<button class="btn btn-sm btn-danger" data-action="deleteLink" data-id="'+l.id+'">X</button>'
+            +'</div>'}).join('') : '<div style="font-size:12px;color:var(--text3);padding:4px 0">No links configured</div>')
+          +'</div>'
+          +'<div style="display:flex;gap:6px;margin-top:8px">'
+          +'<input type="text" id="new-label-'+p.id+'" placeholder="Label (e.g. MediaFire)" style="padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:12px;outline:none;flex:1" />'
+          +'<input type="text" id="new-url-'+p.id+'" placeholder="Download URL" style="padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:12px;outline:none;flex:2" />'
+          +'<button class="btn btn-sm btn-success" data-action="addLink" data-id="'+p.id+'">+ Add</button>'
+          +'</div>'
+          +'</div>';
+      }
+      container.innerHTML = html;
+    } catch(e) { this.toast('Failed to load downloads','error'); }
+  },
+
+  async addLink(productId) {
+    const label = document.getElementById('new-label-'+productId).value;
+    const url = document.getElementById('new-url-'+productId).value;
+    if (!label || !url) { this.toast('Label and URL required','error'); return; }
+    try {
+      await this.req('POST', '/downloads', { product_id: productId, label: label, url: url });
+      this.toast('Link added!','success');
+      this.loadDownloads();
+    } catch(e) { this.toast('Error: '+e.message,'error'); }
+  },
+
+  async deleteLink(id) { if (!confirm('Remove this link?')) return; try { await this.req('DELETE', '/downloads/'+id); this.toast('Removed','success'); this.loadDownloads(); } catch(e) { this.toast('Error','error'); } },
+
+  async loadVideos() {
+    try {
+      const products = await this.req('GET', '/products');
+      const tbody = document.getElementById('videos-table');
+      if (!products.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty">No products with videos.</td></tr>'; return; }
+      const rows = [];
+      for (const p of products) {
+        if (!p.video_url) continue;
+        rows.push('<tr>'
+          +'<td>'+p.name+' Tutorial</td>'
+          +'<td>'+p.name+'</td>'
+          +'<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><a href="'+p.video_url+'" target="_blank" style="color:var(--accent)">'+p.video_url+'</a></td>'
+          +'<td><span class="badge active">Active</span></td>'
+          +'<td class="actions">'
+          +'<button class="btn btn-sm btn-outline" data-action="showVideoModal" data-id="'+p.id+'">Edit</button>'
+          +'<button class="btn btn-sm btn-danger" data-action="removeVideo" data-id="'+p.id+'">Delete</button>'
+          +'</td>'
+          +'</tr>');
+      }
+      tbody.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="5" class="empty">No tutorial videos configured.</td></tr>';
+    } catch(e) { this.toast('Error loading videos','error'); }
+  },
+
+  async showVideoModal(id) {
+    try { var products = await this.req('GET', '/products'); } catch(e) { var products = []; }
+    let currentUrl = '';
+    if (id) { const p = products.find(function(x){return x.id === id}); if (p) currentUrl = p.video_url || ''; }
+    const opts = products.map(function(p){return '<option value="'+p.id+'" '+(p.id===id?'selected':'')+'>'+p.name+'</option>'}).join('');
+    document.getElementById('modal-content').innerHTML = '<h2>'+(id?'Edit':'Add')+' Tutorial Video</h2>'
+      +'<p style="font-size:12px;color:var(--text3);margin-bottom:12px">Add a YouTube video URL to a product.</p>'
+      +'<div class="form-group"><label>Product</label><select id="vf-product">'+opts+'</select></div>'
+      +'<div class="form-group"><label>YouTube Video URL</label><input type="text" id="vf-url" placeholder="https://youtube.com/watch?v=..." value="'+currentUrl+'" /></div>'
+      +'<div class="modal-actions">'
+      +'<button class="btn btn-outline" data-action="closeModal">Cancel</button>'
+      +'<button class="btn btn-primary" data-action="saveVideo" data-id="'+(id||'')+'">Save</button>'
+      +'</div>';
+    document.getElementById('modal-overlay').classList.add('open');
+  },
+
+  async saveVideo(id) {
+    const productId = document.getElementById('vf-product').value;
+    const url = document.getElementById('vf-url').value;
+    if (!url) { this.toast('URL required','error'); return; }
+    try {
+      await this.req('PUT', '/products/'+productId, { video_url: url });
+      this.toast('Video URL saved!','success');
+      this.closeModal(); this.loadVideos();
+    } catch(e) { this.toast('Error: '+e.message,'error'); }
+  },
+
+  async removeVideo(id) {
+    if (!confirm('Remove video URL from this product?')) return;
+    try { await this.req('PUT', '/products/'+id, { video_url: null }); this.toast('Removed','success'); this.loadVideos(); }
+    catch(e) { this.toast('Error','error'); }
+  },
+
+  async loadTestimonials() {
+    this.showLoading('testimonials-table');
+    try {
+      const items = await this.req('GET', '/site/testimonials');
+      document.getElementById('testimonials-table').innerHTML = items.length ? items.map(function(t){return '<tr>'
+        +'<td><strong>'+t.name+'</strong></td>'
+        +'<td>'+'★'.repeat(t.rating)+'</td>'
+        +'<td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+t.content+'</td>'
+        +'<td><span class="badge '+(t.is_active?'active':'inactive')+'">'+(t.is_active?'Active':'Inactive')+'</span></td>'
+        +'<td class="actions">'
+        +'<button class="btn btn-sm btn-outline" data-action="showTestimonialModal" data-id="'+t.id+'">Edit</button>'
+        +'<button class="btn btn-sm btn-danger" data-action="deleteTestimonial" data-id="'+t.id+'">Delete</button>'
+        +'</td>'
+        +'</tr>'}).join('') : '<tr><td colspan="5" class="empty">No testimonials.</td></tr>';
+    } catch(e) { this.toast('Error loading testimonials','error'); }
+  },
+
+  showTestimonialModal(id) {
+    if (id) { this.req('GET','/site/testimonials').then(function(all){ var t = all.find(function(x){return x.id===id}); if(t) ADMIN._renderTestimonialForm(t,id); }); }
+    else this._renderTestimonialForm({name:'',role:'',content:'',rating:5},null);
+  },
+
+  _renderTestimonialForm(item,id) {
+    document.getElementById('modal-content').innerHTML = '<h2>'+(id?'Edit':'Add')+' Testimonial</h2>'
+      +'<div class="form-row"><div class="form-group"><label>Name</label><input type="text" id="tf-name" value="'+item.name+'" /></div>'
+      +'<div class="form-group"><label>Role</label><input type="text" id="tf-role" value="'+(item.role||'')+'" /></div></div>'
+      +'<div class="form-group"><label>Content</label><textarea id="tf-content">'+(item.content||'')+'</textarea></div>'
+      +'<div class="form-group"><label>Rating (1-5)</label><input type="number" id="tf-rating" min="1" max="5" value="'+(item.rating||5)+'" /></div>'
+      +'<div class="modal-actions"><button class="btn btn-outline" data-action="closeModal">Cancel</button>'
+      +'<button class="btn btn-primary" data-action="saveTestimonial" data-id="'+(id||'')+'">'+(id?'Update':'Create')+'</button></div>';
+    document.getElementById('modal-overlay').classList.add('open');
+  },
+
+  async saveTestimonial(id) {
+    const d = {name:document.getElementById('tf-name').value,role:document.getElementById('tf-role').value||null,content:document.getElementById('tf-content').value,rating:parseInt(document.getElementById('tf-rating').value)||5};
+    try { if(id){await this.req('PUT','/site/testimonials/'+id,d);this.toast('Updated!','success');} else{await this.req('POST','/site/testimonials',d);this.toast('Created!','success');} this.closeModal();this.loadTestimonials(); }
+    catch(e){this.toast('Error: '+e.message,'error');}
+  },
+  async deleteTestimonial(id) { if(!confirm('Delete?'))return; try{await this.req('DELETE','/site/testimonials/'+id);this.toast('Deleted','success');this.loadTestimonials();}catch(e){this.toast('Error','error');} },
+
+  async loadFaqs() {
+    this.showLoading('faqs-table');
+    try {
+      const items = await this.req('GET','/site/faqs');
+      document.getElementById('faqs-table').innerHTML = items.length ? items.map(function(f){return '<tr>'
+        +'<td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+f.question+'</td>'
+        +'<td>'+(f.category||'-')+'</td>'
+        +'<td><span class="badge '+(f.is_active?'active':'inactive')+'">'+(f.is_active?'Active':'Inactive')+'</span></td>'
+        +'<td class="actions">'
+        +'<button class="btn btn-sm btn-outline" data-action="showFaqModal" data-id="'+f.id+'">Edit</button>'
+        +'<button class="btn btn-sm btn-danger" data-action="deleteFaq" data-id="'+f.id+'">Delete</button>'
+        +'</td>'
+        +'</tr>'}).join('') : '<tr><td colspan="4" class="empty">No FAQs.</td></tr>';
+    } catch(e){this.toast('Error loading FAQs','error');}
+  },
+
+  showFaqModal(id) {
+    if(id){this.req('GET','/site/faqs').then(function(all){var f=all.find(function(x){return x.id===id});if(f)ADMIN._renderFaqForm(f,id);});}
+    else this._renderFaqForm({question:'',answer:'',category:''},null);
+  },
+
+  _renderFaqForm(item,id) {
+    document.getElementById('modal-content').innerHTML = '<h2>'+(id?'Edit':'Add')+' FAQ</h2>'
+      +'<div class="form-group"><label>Question</label><input type="text" id="qf-q" value="'+item.question.replace(/"/g,'&quot;')+'" /></div>'
+      +'<div class="form-group"><label>Answer</label><textarea id="qf-a">'+(item.answer||'')+'</textarea></div>'
+      +'<div class="form-group"><label>Category</label><input type="text" id="qf-cat" value="'+(item.category||'')+'" placeholder="general / purchasing / support" /></div>'
+      +'<div class="modal-actions"><button class="btn btn-outline" data-action="closeModal">Cancel</button>'
+      +'<button class="btn btn-primary" data-action="saveFaq" data-id="'+(id||'')+'">'+(id?'Update':'Create')+'</button></div>';
+    document.getElementById('modal-overlay').classList.add('open');
+  },
+
+  async saveFaq(id) {
+    const d = {question:document.getElementById('qf-q').value,answer:document.getElementById('qf-a').value,category:document.getElementById('qf-cat').value||null};
+    try{if(id){await this.req('PUT','/site/faqs/'+id,d);this.toast('Updated!','success');}else{await this.req('POST','/site/faqs',d);this.toast('Created!','success');}this.closeModal();this.loadFaqs();}
+    catch(e){this.toast('Error: '+e.message,'error');}
+  },
+  async deleteFaq(id){if(!confirm('Delete?'))return;try{await this.req('DELETE','/site/faqs/'+id);this.toast('Deleted','success');this.loadFaqs();}catch(e){this.toast('Error','error');}},
+
+  async loadOrders(status) {
+    this.showLoading('orders-table');
+    try {
+      var url = '/payments/admin/orders';
+      if (status) url += '?status=' + status;
+      const data = await this.req('GET', url);
+      const orders = data.orders || [];
+
+      const all = data.total;
+      const pending = orders.filter(function(o){return o.status==='pending'}).length;
+      const approved = orders.filter(function(o){return o.status==='approved'}).length;
+      const rejected = orders.filter(function(o){return o.status==='rejected'}).length;
+      const totalRev = orders.reduce(function(s,o){return s + (o.status==='approved' ? o.amount : 0)}, 0);
+
+      document.getElementById('orders-summary').innerHTML = [
+        {n:data.total,l:'Total'},{n:approved,l:'Approved'},{n:pending,l:'Pending'},{n:'₹'+totalRev.toLocaleString(),l:'Revenue'}
+      ].map(function(i){return '<div class="stat-card"><div class="num">'+i.n+'</div><div class="label">'+i.l+'</div></div>'}).join('');
+
+      var tbody = document.getElementById('orders-table');
+      if (!orders.length) { tbody.innerHTML = '<tr><td colspan="8" class="empty">No orders yet.</td></tr>'; return; }
+      tbody.innerHTML = orders.map(function(o){
+        var statusClass = o.status==='approved'?'active':o.status==='rejected'?'inactive':'new';
+        var txnHtml = o.transaction_id ? '<br /><span style="font-size:11px;color:var(--text3)">Txn: '+o.transaction_id+'</span>' : '';
+        var actionBtns = '';
+        if (o.status === 'pending') {
+          actionBtns = '<button class="btn btn-sm btn-success" data-action="approveOrder" data-id="'+o._id+'" style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border:none">✓ Approve</button>'
+            + '<button class="btn btn-sm btn-danger" data-action="rejectOrder" data-id="'+o._id+'">✕ Reject</button>';
+        } else if (o.status === 'approved') {
+          actionBtns = '<button class="btn btn-sm btn-outline" data-action="copyAccessLink" data-id="'+o._id+'" data-token="'+o.access_token+'">🔗 Link</button>';
+        }
+        return '<tr>'
+          +'<td style="font-size:10px;font-family:monospace;max-width:80px;overflow:hidden;text-overflow:ellipsis">'+o._id.slice(-8)+'</td>'
+          +'<td>'+(o.product_id?.name||'Unknown')+'</td>'
+          +'<td><strong>'+o.customer_name+'</strong><br /><span style="font-size:11px;color:var(--text3)">'+o.customer_email+'</span>'+(o.customer_phone?'<br /><span style="font-size:11px;color:var(--text3)">'+o.customer_phone+'</span>':'')+txnHtml+'</td>'
+          +'<td>₹'+o.amount.toLocaleString()+'</td>'
+          +'<td><span class="badge '+statusClass+'">'+o.status+'</span></td>'
+          +'<td style="font-size:11px;color:var(--text3)">'+new Date(o.created_at).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+'</td>'
+          +'<td class="actions" style="gap:4px">'+actionBtns+'</td>'
+          +'</tr>';
+      }).join('');
+    } catch(e) { this.toast('Error loading orders: '+e.message,'error'); }
+  },
+
+  async approveOrder(id) {
+    if (!confirm('Approve this order? User will get instant access to the product.')) return;
+    try {
+      var r = await this.req('POST', '/payments/approve/'+id);
+      this.toast('✅ Order approved! User can now access product.','success');
+      this.loadOrders();
+    } catch(e) { this.toast('Error: '+e.message,'error'); }
+  },
+
+  async rejectOrder(id) {
+    if (!confirm('Reject this order? User will not get access.')) return;
+    try {
+      await this.req('POST', '/payments/reject/'+id);
+      this.toast('Order rejected.','info');
+      this.loadOrders();
+    } catch(e) { this.toast('Error: '+e.message,'error'); }
+  },
+
+  async copyAccessLink(id) {
+    var token = event.target.getAttribute('data-token');
+    if (!token) { this.toast('No token available','error'); return; }
+    var link = window.location.origin + '/order-success.html?token=' + token;
+    try {
+      await navigator.clipboard.writeText(link);
+      this.toast('🔗 Access link copied!','success');
+    } catch(e) { this.toast('Copy manually: ' + link,'info'); }
+  },
+
+  async loadMessages() {
+    this.showLoading('messages-table');
+    try {
+      const items = await this.req('GET','/contact');
+      document.getElementById('messages-table').innerHTML = items.length ? items.map(function(m){return '<tr>'
+        +'<td><strong>'+m.name+'</strong></td>'
+        +'<td>'+m.email+'</td>'
+        +'<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(m.subject||'-')+'</td>'
+        +'<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+m.message+'</td>'
+        +'<td style="font-size:11px;color:var(--text3)">'+(m.created_at||'')+'</td>'
+        +'<td><span class="badge '+(m.is_read?'active':'new')+'">'+(m.is_read?'Read':'New')+'</span></td>'
+        +'<td class="actions">'+(!m.is_read?'<button class="btn btn-sm btn-outline" data-action="markRead" data-id="'+m.id+'">Read</button>':'')+'<button class="btn btn-sm btn-danger" data-action="deleteMessage" data-id="'+m.id+'">Delete</button></td>'
+        +'</tr>'}).join('') : '<tr><td colspan="7" class="empty">No messages.</td></tr>';
+    } catch(e){this.toast('Error loading messages','error');}
+  },
+
+  async markRead(id){try{await this.req('PUT','/contact/'+id+'/read');this.loadMessages();}catch(e){this.toast('Error','error');}},
+  async deleteMessage(id){if(!confirm('Delete?'))return;try{await this.req('DELETE','/contact/'+id);this.loadMessages();}catch(e){this.toast('Error','error');}},
+
+  async loadBlog() {
+    this.showLoading('blog-table');
+    try {
+      const items = await this.req('GET','/site/blog');
+      document.getElementById('blog-table').innerHTML = items.length ? items.map(function(p){return '<tr>'
+        +'<td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><strong>'+p.title+'</strong></td>'
+        +'<td>'+(p.author||'Admin')+'</td>'
+        +'<td style="font-size:11px;color:var(--text3)">'+(p.created_at||'')+'</td>'
+        +'<td><span class="badge '+(p.is_published?'active':'inactive')+'">'+(p.is_published?'Published':'Draft')+'</span></td>'
+        +'<td class="actions">'
+        +'<button class="btn btn-sm btn-outline" data-action="showBlogModal" data-id="'+p.id+'">Edit</button>'
+        +'<button class="btn btn-sm btn-danger" data-action="deleteBlog" data-id="'+p.id+'">Delete</button>'
+        +'</td>'
+        +'</tr>'}).join('') : '<tr><td colspan="5" class="empty">No posts.</td></tr>';
+    } catch(e){this.toast('Error loading blog','error');}
+  },
+
+  showBlogModal(id) {
+    if(id){this.req('GET','/site/blog').then(function(all){var p=all.find(function(x){return x.id===id});if(p)ADMIN._renderBlogForm(p,id);});}
+    else this._renderBlogForm({title:'',content:'',excerpt:'',author:'Admin'},null);
+  },
+
+  _renderBlogForm(item,id) {
+    document.getElementById('modal-content').innerHTML = '<h2>'+(id?'Edit':'Add')+' Blog Post</h2>'
+      +'<div class="form-group"><label>Title</label><input type="text" id="bf-title" value="'+item.title.replace(/"/g,'&quot;')+'" /></div>'
+      +'<div class="form-group"><label>Excerpt</label><textarea id="bf-excerpt">'+(item.excerpt||'')+'</textarea></div>'
+      +'<div class="form-group"><label>Content</label><textarea id="bf-content" style="min-height:160px">'+(item.content||'')+'</textarea></div>'
+      +'<div class="form-group"><label>Author</label><input type="text" id="bf-author" value="'+(item.author||'Admin')+'" /></div>'
+      +'<div class="modal-actions"><button class="btn btn-outline" data-action="closeModal">Cancel</button>'
+      +'<button class="btn btn-primary" data-action="saveBlog" data-id="'+(id||'')+'">'+(id?'Update':'Create')+'</button></div>';
+    document.getElementById('modal-overlay').classList.add('open');
+  },
+
+  async saveBlog(id) {
+    const d = {title:document.getElementById('bf-title').value,excerpt:document.getElementById('bf-excerpt').value||null,content:document.getElementById('bf-content').value,author:document.getElementById('bf-author').value||'Admin'};
+    try{if(id){await this.req('PUT','/site/blog/'+id,d);this.toast('Updated!','success');}else{await this.req('POST','/site/blog',d);this.toast('Created!','success');}this.closeModal();this.loadBlog();}
+    catch(e){this.toast('Error: '+e.message,'error');}
+  },
+  async deleteBlog(id){if(!confirm('Delete?'))return;try{await this.req('DELETE','/site/blog/'+id);this.toast('Deleted','success');this.loadBlog();}catch(e){this.toast('Error','error');}},
+
+  async loadVn() {
+    this.showLoading('vn-table');
+    try {
+      const items = await this.req('GET', '/videonotif/all');
+      const tbody = document.getElementById('vn-table');
+      tbody.innerHTML = items.length ? items.map(function(n){
+        var match = n.video_url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+        var thumb = match ? 'https://img.youtube.com/vi/'+match[1]+'/default.jpg' : '';
+        return '<tr>'
+          +'<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><strong>'+n.title+'</strong></td>'
+          +'<td>'+(thumb ? '<img src="'+thumb+'" style="width:80px;height:45px;border-radius:4px;object-fit:cover" />' : '-')+'</td>'
+          +'<td><span class="badge '+(n.is_active?'active':'inactive')+'">'+(n.is_active?'Active':'Inactive')+'</span></td>'
+          +'<td class="actions">'
+          +'<button class="btn btn-sm btn-outline" data-action="showVnModal" data-id="'+n.id+'">Edit</button>'
+          +'<button class="btn btn-sm btn-danger" data-action="deleteVn" data-id="'+n.id+'">Delete</button>'
+          +'</td>'
+          +'</tr>';
+      }).join('') : '<tr><td colspan="4" class="empty">No video notifications.</td></tr>';
+    } catch(e) { this.toast('Error loading notifications','error'); }
+  },
+
+  async showVnModal(id) {
+    let item = { title: '', video_url: '', thumbnail_url: '' };
+    if (id) { try { const all = await this.req('GET', '/videonotif/all'); const found = all.find(function(x){return x.id === id}); if (found) item = found; } catch(e) {} }
+    document.getElementById('modal-content').innerHTML = '<h2>'+(id?'Edit':'Add')+' Video Popup Notification</h2>'
+      +'<div class="form-group"><label>Title</label><input type="text" id="vn-title" value="'+item.title.replace(/"/g,'&quot;')+'" placeholder="New video: Panel Setup Guide!" /></div>'
+      +'<div class="form-group"><label>YouTube Video URL</label><input type="text" id="vn-url" value="'+item.video_url+'" placeholder="https://youtube.com/watch?v=..." /></div>'
+      +'<div class="form-group"><label>Thumbnail URL (leave empty for auto)</label><input type="text" id="vn-thumb" value="'+(item.thumbnail_url||'')+'" placeholder="Auto-fetched from YouTube" /></div>'
+      +'<div class="modal-actions">'
+      +'<button class="btn btn-outline" data-action="closeModal">Cancel</button>'
+      +'<button class="btn btn-primary" data-action="saveVn" data-id="'+(id||'')+'">'+(id?'Update':'Create')+'</button>'
+      +'</div>';
+    document.getElementById('modal-overlay').classList.add('open');
+  },
+
+  async saveVn(id) {
+    const d = { title: document.getElementById('vn-title').value, video_url: document.getElementById('vn-url').value, thumbnail_url: document.getElementById('vn-thumb').value || null };
+    if (!d.title || !d.video_url) { this.toast('Title and URL required','error'); return; }
+    try {
+      if (id) { await this.req('PUT', '/videonotif/'+id, d); this.toast('Updated!','success'); }
+      else { await this.req('POST', '/videonotif', d); this.toast('Created!','success'); }
+      this.closeModal(); this.loadVn();
+    } catch(e) { this.toast('Error: '+e.message,'error'); }
+  },
+
+  async deleteVn(id) { if(!confirm('Delete this notification?')) return; try { await this.req('DELETE','/videonotif/'+id); this.toast('Deleted','success'); this.loadVn(); } catch(e) { this.toast('Error','error'); } },
+
+  async saveFakeStats() {
+    try {
+      const enabled = document.getElementById('set-fake-enable').checked;
+      await this.req('PUT','/site/settings',{key:'use_fake_stats',value:enabled?'true':'false'});
+      if (enabled) {
+        await this.req('PUT','/site/settings',{key:'fake_live_users',value:document.getElementById('set-fake-users').value});
+        await this.req('PUT','/site/settings',{key:'fake_today_visits',value:document.getElementById('set-fake-visits').value});
+        await this.req('PUT','/site/settings',{key:'fake_total_downloads',value:document.getElementById('set-fake-downloads').value});
+        await this.req('PUT','/site/settings',{key:'fake_total_products',value:document.getElementById('set-fake-products').value});
+      }
+      this.toast('Fake stats saved!','success');
+    } catch(e) { this.toast('Error: '+e.message,'error'); }
+  },
+
+  async loadSettings() {
+    try {
+      const s = await this.req('GET', '/site/settings');
+      if (s.use_fake_stats === 'true') {
+        document.getElementById('set-fake-enable').checked = true;
+        document.getElementById('fake-stats-fields').style.display = 'block';
+        if (s.fake_live_users) document.getElementById('set-fake-users').value = s.fake_live_users;
+        if (s.fake_today_visits) document.getElementById('set-fake-visits').value = s.fake_today_visits;
+        if (s.fake_total_downloads) document.getElementById('set-fake-downloads').value = s.fake_total_downloads;
+        if (s.fake_total_products) document.getElementById('set-fake-products').value = s.fake_total_products;
+      }
+      if (s.upi_id) document.getElementById('set-upi-id').value = s.upi_id;
+      if (s.upi_name) document.getElementById('set-upi-name').value = s.upi_name;
+      if (s.binance_id) document.getElementById('set-binance-id').value = s.binance_id;
+    } catch(e) {}
+  },
+
+  async saveSettings() {
+    try {
+      await this.req('PUT','/site/settings',{key:'site_title',value:document.getElementById('set-title').value});
+      await this.req('PUT','/site/settings',{key:'site_description',value:document.getElementById('set-desc').value});
+      await this.req('PUT','/site/settings',{key:'archive_password',value:document.getElementById('set-pass').value});
+      await this.req('PUT','/site/settings',{key:'contact_email',value:document.getElementById('set-email').value});
+      await this.req('PUT','/site/settings',{key:'upi_id',value:document.getElementById('set-upi-id').value});
+      await this.req('PUT','/site/settings',{key:'upi_name',value:document.getElementById('set-upi-name').value});
+      await this.req('PUT','/site/settings',{key:'binance_id',value:document.getElementById('set-binance-id').value});
+      this.toast('Settings saved!','success');
+    } catch(e){this.toast('Error: '+e.message,'error');}
+  },
+
+  async reseed() {
+    if (!confirm('This will reset all data to defaults. Continue?')) return;
+    try { await this.req('POST','/site/settings',{key:'_reseed',value:'1'}); this.toast('Re-seed triggered. Restart server.','info'); }
+    catch(e){this.toast('Error: '+e.message,'error');}
+  }
+};
+
+function ripple(e) {
+  var btn = e.currentTarget;
+  var rect = btn.getBoundingClientRect();
+  var r = Math.max(rect.width, rect.height);
+  var span = document.createElement('span');
+  span.style.cssText = 'width:'+r+'px;height:'+r+'px;left:'+(e.clientX-rect.left-r/2)+'px;top:'+(e.clientY-rect.top-r/2)+'px;position:absolute;border-radius:50%;background:rgba(255,255,255,.25);transform:scale(0);animation:rippleAnim .6s ease-out;pointer-events:none';
+  btn.appendChild(span);
+  setTimeout(function(){span.remove()}, 600);
+}
+
+function init() {
+  document.getElementById('login-btn').addEventListener('click', function() { ADMIN.login(); });
+  document.getElementById('login-pass').addEventListener('keydown', function(e) { if(e.key==='Enter') ADMIN.login(); });
+  document.getElementById('modal-overlay').addEventListener('click', function(e) { if(e.target===e.currentTarget) ADMIN.closeModal(); });
+  document.getElementById('set-fake-enable').addEventListener('change', function() {
+    document.getElementById('fake-stats-fields').style.display = this.checked ? 'block' : 'none';
+  });
+
+  document.querySelectorAll('.btn').forEach(function(b){ b.addEventListener('click', ripple); });
+
+  document.body.addEventListener('click', function(e) {
+    var el = e.target.closest('[data-action]');
+    if (!el) return;
+    var action = el.getAttribute('data-action');
+    var id = el.getAttribute('data-id') || undefined;
+    var tab = el.getAttribute('data-tab') || undefined;
+    var delay = el.getAttribute('data-delay') || undefined;
+    var status = el.getAttribute('data-status') || undefined;
+
+    if (action === 'switchTab') {
+      ADMIN.switchTab(tab, delay);
+      return;
+    }
+    if (status !== undefined) {
+      ADMIN[action](status);
+    } else if (id !== undefined && id !== '') {
+      ADMIN[action](id);
+    } else {
+      ADMIN[action]();
+    }
+  });
+
+  document.body.addEventListener('click', function(e) {
+    var el = e.target.closest('[data-tab]');
+    if (!el || el.hasAttribute('data-action')) return;
+    var tab = el.getAttribute('data-tab');
+    ADMIN.switchTab(tab);
+  });
+}
+
+if (document.readyState !== 'loading') { init(); }
+else { document.addEventListener('DOMContentLoaded', init); }
+</script>
+</body>
+</html>

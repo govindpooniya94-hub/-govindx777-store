@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Successful - GOVIND X777</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}:root{--bg:#050508;--bg2:#0a0a12;--bg3:#0f0f1a;--bg4:#1a1a2e;--accent:#ff6b35;--accent2:#e63900;--accent-dim:rgba(255,107,53,.12);--success:#22c55e;--text:#e8e8f0;--text2:#8888aa;--text3:#555577;--border:rgba(255,255,255,.06);--radius:8px;--font:'Inter','Segoe UI',system-ui,sans-serif}body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;padding:20px;-webkit-font-smoothing:antialiased}.grain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}.container{position:relative;z-index:1;width:100%;max-width:640px;margin:0 auto}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+    @keyframes checkAnim{0%{transform:scale(0);opacity:0}50%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+    .card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:32px;margin-bottom:20px;animation:fadeIn .5s ease}
+    .success-icon{width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;animation:checkAnim .6s cubic-bezier(.16,1,.3,1)}.success-icon span{color:var(--success)}
+    h1{font-size:22px;font-weight:800;text-align:center;margin-bottom:4px;background:linear-gradient(135deg,var(--success),#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .sub{text-align:center;color:var(--text2);font-size:14px;margin-bottom:20px}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(34,197,94,.12);color:var(--success);margin-bottom:16px}
+    .section-title{font-size:14px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--text)}.section-title span{color:var(--text3);font-weight:400}
+
+    .delivery-block{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}.delivery-block:last-child{margin-bottom:0}
+    .delivery-block .db-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+    .delivery-block .db-value{font-size:14px;color:var(--text);word-break:break-all}
+    .delivery-block .key-value{font-family:'Courier New',monospace;font-size:13px;color:var(--accent);background:var(--bg);padding:8px 12px;border-radius:6px;border:1px solid var(--border);user-select:all;margin-top:4px}
+
+    .link-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;transition:all .2s}.link-item:hover{border-color:rgba(255,107,53,.3)}
+    .link-item .li-info{flex:1}.link-item .li-label{font-size:13px;font-weight:600}.link-item .li-size{font-size:11px;color:var(--text3);margin-top:2px}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s cubic-bezier(.16,1,.3,1);border:none;font-family:var(--font);text-decoration:none;user-select:none}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 14px rgba(255,107,53,.25)}.btn-primary:hover{box-shadow:0 6px 20px rgba(255,107,53,.4);transform:translateY(-1px)}.btn-outline{background:0 0;color:var(--text);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-sm{padding:5px 12px;font-size:11px;border-radius:5px}
+
+    .notes-block{background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(255,107,53,.03));border:1px solid rgba(255,107,53,.15);border-radius:var(--radius);padding:16px;margin-bottom:16px;white-space:pre-wrap;font-size:13px;line-height:1.6;color:var(--text2)}
+
+    .footer-links{text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+    .footer-links a{color:var(--text3);text-decoration:none;font-size:12px;margin:0 8px}.footer-links a:hover{color:var(--accent)}
+
+    .loading{text-align:center;padding:40px}.loading .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}@keyframes spin{to{transform:rotate(360deg)}}
+    .loading p{color:var(--text3);font-size:14px}
+
+    .error-page{text-align:center;padding:40px}.error-page .e-icon{font-size:48px;margin-bottom:12px}.error-page h2{font-size:18px;margin-bottom:6px}.error-page p{color:var(--text3);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="container" id="app">
+    <div class="loading" id="loading-state">
+      <div class="spinner"></div>
+      <p>Verifying your purchase...</p>
+    </div>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    if (!token) {
+      document.getElementById('app').innerHTML = `
+        <div class="card error-page">
+          <div class="e-icon">⚠️</div>
+          <h2>No access token found</h2>
+          <p>Please use the link from your payment confirmation.</p>
+          <a href="/" class="btn btn-primary" style="margin-top:16px">← Back to Store</a>
+        </div>`;
+    } else {
+      fetch('/api/payments/access/' + encodeURIComponent(token))
+        .then(function(r) {
+          if (!r.ok) {
+            if (r.status === 404) throw new Error('Invalid or expired access token.');
+            throw new Error('Failed to load order.');
+          }
+          return r.json();
+        })
+        .then(function(data) {
+          renderSuccess(data);
+        })
+        .catch(function(err) {
+          document.getElementById('app').innerHTML = `
+            <div class="card error-page">
+              <div class="e-icon">❌</div>
+              <h2>Access Error</h2>
+              <p>${err.message}</p>
+              <a href="/" class="btn btn-primary" style="margin-top:16px">← Back to Store</a>
+            </div>`;
+        });
+    }
+
+    function getUSD(price, price_usd) {
+      if (price_usd) return price_usd;
+      var n = parseInt(price.replace(/[^0-9]/g, ''));
+      if (!n) return '';
+      return '$' + (n * 0.012).toFixed(2) + ' USD';
+    }
+
+    function renderSuccess(data) {
+      var p = data.product;
+      var o = data.order;
+      var usd = getUSD(p.price, p.price_usd);
+
+      var html = '<div class="card">' +
+        '<div class="success-icon"><span>✓</span></div>' +
+        '<h1>Payment Successful!</h1>' +
+        '<p class="sub">Your purchase of <strong>' + p.name + '</strong> is confirmed. Access your content below.</p>';
+
+      if (p.download_links && p.download_links.length) {
+        html += '<div class="section-title">📥 Download Links</div>' +
+          p.download_links.map(function(l) {
+            var passHtml = l.password ? '<div style="font-size:11px;color:var(--text3);margin-top:2px">🔑 Password: <code style="color:var(--accent);background:var(--bg2);padding:1px 6px;border-radius:3px">' + l.password + '</code></div>' : '';
+            return '<div class="link-item">' +
+              '<div class="li-info"><div class="li-label">' + l.label + '</div>' +
+              (l.file_size ? '<div class="li-size">💾 ' + l.file_size + '</div>' : '') +
+              passHtml + '</div>' +
+              '<a href="' + l.url + '" target="_blank" class="btn btn-primary btn-sm">⬇ Download</a>' +
+              '</div>';
+          }).join('') + '<div style="height:16px"></div>';
+      }
+
+      if (p.product_keys && p.product_keys.length) {
+        html += '<div class="section-title">🔑 License / Product Keys</div>' +
+          p.product_keys.map(function(k) {
+            return '<div class="delivery-block"><div class="db-label">Product Key</div><div class="key-value">' + k + '</div></div>';
+          }).join('') + '<div style="height:16px"></div>';
+      }
+
+      if (p.delivery_notes) {
+        html += '<div class="section-title">📋 Delivery Notes & Instructions</div>' +
+          '<div class="notes-block">' + p.delivery_notes + '</div>' +
+          '<div style="height:16px"></div>';
+      }
+
+      html += '<div class="section-title">ℹ️ Order Info <span>#' + o.id + '</span></div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--text2);background:var(--bg2);padding:12px;border-radius:var(--radius)">' +
+        '<span>Product:</span><span style="text-align:right">' + p.name + '</span>' +
+        '<span>Amount:</span><span style="text-align:right;color:var(--accent);font-weight:600">' + p.price + (usd ? ' <span style="font-size:11px;color:var(--text3);font-weight:400">(' + usd + ')</span>' : '') + '</span>' +
+        '<span>Purchased:</span><span style="text-align:right">' + new Date(o.paid_at).toLocaleString('en-IN') + '</span>' +
+        '</div>';
+
+      html += '<div class="footer-links">' +
+        '<a href="/">← Back to Store</a>' +
+        '<a href="mailto:support@govindx777store.in">📧 Support</a>' +
+        '</div>';
+
+      html += '</div>';
+      document.getElementById('app').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
